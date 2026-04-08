@@ -1,0 +1,30 @@
+{
+  "name": "gymstore-backend",
+  "version": "1.0.0",
+  "description": "Backend for gymstore website",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "check": "node src/scripts/check.js",
+    "migrate:admins": "node src/scripts/migrate-admins.js",
+    "smoke": "node src/scripts/smoke.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.21.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.15.1"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "nodemon": "^2.0.22",
+    "supertest": "^7.1.4"
+  }
+}
+

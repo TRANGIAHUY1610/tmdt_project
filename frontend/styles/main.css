@@ -1,0 +1,2556 @@
+/* --- 1. RESET & BASIC --- */
+:root {
+  --primary-color: #c92127; /* MAu i'a Fahasa */
+  --text-color: #333;
+  --bg-color: #f0f0f0; /* MAu nan xAm nha */
+  --white: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  --hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+  font-size: 14px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.2s;
+}
+ul {
+  list-style: none;
+}
+.container {
+  max-width: 1230px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* --- 2. HEADER --- */
+.header {
+  background: var(--white);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 15px 0;
+}
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-box {
+  flex: 1;
+  display: flex;
+  position: relative;
+  max-width: 600px;
+}
+.search-box input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+.search-box button {
+  position: absolute;
+  right: 5px;
+  top: 3px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 7px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.search-box button:hover {
+  background: #a81a1f;
+}
+
+.header-icons {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  color: #555;
+  font-size: 12px;
+}
+.icon-item i {
+  font-size: 20px;
+  margin-bottom: 4px;
+  color: #777;
+}
+.icon-item:hover i,
+.icon-item:hover span {
+  color: var(--primary-color);
+}
+.user-link {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* --- 3. BANNER --- */
+.banner-section {
+  margin: 20px 0;
+}
+.banner-img img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+/* --- 4. MAIN LAYOUT (Sidebar + Content) --- */
+.main-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background: var(--white);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.sidebar h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.filter-item {
+  margin-bottom: 20px;
+}
+.filter-item h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.category-list li {
+  margin-bottom: 8px;
+}
+.category-list a {
+  color: #555;
+}
+.category-list a:hover {
+  color: var(--primary-color);
+  padding-left: 5px;
+}
+
+.btn-filter {
+  width: 100%;
+  padding: 8px;
+  background: white;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.btn-filter:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Product Section */
+.product-section {
+  flex: 1;
+}
+.section-header {
+  background: var(--white);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+.section-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #444;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+/* --- 5. PRODUCT CARD (TrAi tim caa giao dii?n) --- */
+.product-card {
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: 0.3s;
+  position: relative;
+  padding: 10px;
+}
+.product-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--hover-shadow);
+  transform: translateY(-2px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+.product-card h3 {
+  font-size: 14px;
+  line-height: 1.4;
+  height: 40px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 5px;
+  color: #333;
+}
+.product-card h3:hover {
+  color: var(--primary-color);
+}
+
+.product-card .price {
+  font-size: 18px;
+  color: var(--primary-color);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.product-card .original-price {
+  font-size: 13px;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: normal;
+}
+
+.rating-area {
+  font-size: 12px;
+  margin: 5px 0;
+  color: #f7941e;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.review-count {
+  color: #999;
+}
+
+.card-footer {
+  margin-top: 10px;
+}
+.btn-add-cart {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid var(--primary-color);
+  background: white;
+  color: var(--primary-color);
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-add-cart:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Badge giam giA */
+.badge-hot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--primary-color);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .search-box {
+    width: 100%;
+  }
+  .main-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    display: none; /* Hide sidebar on mobile by default */
+  }
+  .footer .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+/* --- CSS CHO DROPDOWN & ICON --- */
+
+/* Badge si' lang gia hAng */
+.badge-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Cau trAc Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 250px; /* AiT riTng menu */
+  background: white;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 10px 0;
+  z-index: 1000;
+
+  /* Hii?u ang an hii?n */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.3s ease;
+  border: 1px solid #eee;
+}
+
+/* MAi tAn nhan chi? lAn trAn (Trang trA) */
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  background: white;
+  transform: rotate(45deg);
+  border-top: 1px solid #eee;
+  border-left: 1px solid #eee;
+}
+
+/* Account menu */
+.menu-link {
+  display: block;
+  padding: 10px 20px;
+  color: #333;
+  font-size: 14px;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu-link:hover {
+  background-color: #f9f9f9;
+  color: var(--primary-color);
+}
+
+/* Menu ThAng bAo */
+.notify-menu {
+  width: 300px;
+  padding: 0;
+}
+.notify-header {
+  padding: 10px 15px;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+.notify-footer {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #eee;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 13px;
+}
+.notify-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 15px;
+  border-bottom: 1px solid #f5f5f5;
+  cursor: pointer;
+}
+.notify-item:hover {
+  background: #fafafa;
+}
+.notify-item img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+.notify-item strong {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 2px;
+}
+.notify-item p {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+:root {
+  --primary-color: #c92127; /* MAu i'a Fahasa */
+  --primary-dark: #a81a1f;
+  --text-color: #333;
+  --bg-color: #f0f2f5;
+  --white: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+/* --- STYLE CHO TRANG LOGIN & REGISTER --- */
+
+/* Cifn giaa mAn hAnh */
+.auth-body {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+/* CAi hiTp trang chaa form */
+.auth-container {
+  background: var(--white);
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+/* Logo & TiAu i'a */
+.auth-logo {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+.auth-title {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+/* i" nhap lii?u (Input) */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+  position: relative;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box; /* Prevent border overflow */
+  transition: 0.3s;
+}
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(201, 33, 39, 0.1);
+}
+
+/* Login/Register button */
+.btn-auth {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+.btn-auth:hover {
+  background: var(--primary-dark);
+}
+
+/* ChAn trang form */
+.auth-footer {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+.auth-footer a {
+  color: var(--primary-color);
+  font-weight: bold;
+  text-decoration: none;
+}
+/* --- STYLE CHO TRANG GIiZ Hi?NG --- */
+
+.cart-page {
+  padding: 30px 0;
+  background-color: var(--bg-color); /* Nan xAm nhat cho toAn trang cart */
+  min-height: 80vh;
+}
+
+/* Layout 2 ciTt flex */
+.cart-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* === Ci~T TRAI: DANH SACH Hi?NG === */
+.cart-items-col {
+  flex: 2; /* Chiam 2 phan */
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Tang dAng san pham */
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.item-img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #eee;
+  margin-right: 20px;
+  border-radius: 4px;
+}
+
+.item-info {
+  flex: 1;
+}
+.item-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+.item-price {
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* BiT nAt ciTng tra si' lang */
+.item-qty {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: fit-content;
+  margin-top: 10px;
+}
+.qty-btn {
+  background: white;
+  border: none;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+}
+.qty-btn:hover {
+  background: #f0f0f0;
+}
+.qty-input {
+  width: 40px;
+  text-align: center;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+.item-remove {
+  color: #999;
+  cursor: pointer;
+  margin-left: 20px;
+  font-size: 18px;
+}
+.item-remove:hover {
+  color: var(--primary-color);
+}
+
+/* === Ci~T PHaI: Ti"NG TIi?N (STICKY) === */
+.cart-summary-col {
+  flex: 1; /* Chiam 1 phan */
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  position: sticky; /* DAnh chat khi cuiTn */
+  top: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #555;
+}
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+.total-price-text {
+  color: var(--primary-color);
+  font-size: 24px;
+}
+
+.btn-checkout {
+  width: 100%;
+  padding: 15px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  text-transform: uppercase;
+}
+.btn-checkout:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 4px 10px rgba(201, 33, 39, 0.3);
+}
+
+/* Responsive cho i'ii?n thoai */
+@media (max-width: 768px) {
+  .cart-layout {
+    flex-direction: column;
+  }
+  .cart-summary-col {
+    width: 100%;
+    position: static;
+  }
+}
+/* --- CSS CHO TRANG CHECKOUT (THANH TOAN) --- */
+
+/* Radio button thanh toAn i'ap */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.payment-option:hover {
+  border-color: var(--primary-color);
+  background: #fffcfc;
+}
+
+.payment-option input {
+  margin-right: 15px;
+  accent-color: var(--primary-color); /* MAu i'a cho nAt radio */
+  transform: scale(1.2);
+}
+
+.payment-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.payment-content img {
+  width: 32px;
+  height: 32px;
+}
+
+/* Summary section item */
+.mini-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f9f9f9;
+  padding-bottom: 8px;
+}
+.mini-item-name {
+  flex: 1;
+  padding-right: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* ================================== */
+/* 1. KHU VaC 4 BANNER NHiZ (PROMO GRID) */
+/* ================================== */
+/* --- 1. AaM BaO TaT Ca CAC KHaI Ai?U NHAU --- */
+
+.promo-grid {
+  display: grid;
+  /* DAng 4 ciTt cA kAch thi>c bang nhau (1fr) */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px; /* Khoang cAch giaa cAc banner */
+  margin: 20px 0;
+}
+
+.promo-item {
+  /* Quan trang: Chiau cao ci' i'i<nh i'if cAc khi'i i'au nhau */
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px;
+  /* Li>p vian ngoAi (mAu i'a i'am) */
+  background-color: #a00000;
+  padding: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 2. HIi?U aNG VIi?N BiSN TRONG (INNER BORDER) --- */
+
+.inner-border-wrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
+  /* Li>p vian trong (mAu sAng) */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.promo-item:hover .inner-border-wrapper {
+  transform: translateY(-2px); /* Hii?u ang nhac nha khi hover */
+}
+
+.inner-border-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fill container without distortion */
+  display: block;
+}
+
+/* --- 3. NisT MUA NGAY --- */
+.mua-ngay-btn {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #e30019; /* MAu nan i'a */
+  color: white;
+  border: 2px solid white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 5;
+  transition: background-color 0.3s;
+}
+
+.mua-ngay-btn:hover {
+  background-color: #c90016;
+}
+/* ================================== */
+/* 2. Hi?NG ICONS CHaC Ni,NG (UTILITY ICONS) */
+/* ================================== */
+/* ================================== */
+/* 2. Hi?NG ICONS CHaC Ni,NG (UTILITY ICONS) */
+/* Phong cAch phang, i'n gian nh Fahasa */
+/* ================================== */
+
+#utility-icons-section {
+  /* Remove unnecessary padding and margin when container already has spacing */
+  padding: 0;
+  margin: 30px auto; /* Cifn giaa */
+}
+
+.icon-wrapper {
+  display: flex;
+  /* Cifn i'au cAc khoang tri'ng giaa cAc icon */
+  justify-content: space-around;
+  align-items: flex-start; /* Icons cifn trAn */
+  padding: 15px 0;
+  background-color: #fff;
+  border-radius: 8px;
+
+  /* Thiat ka phang hn, loai ba box-shadow i'am */
+  /* Nau mui'n cA vian di>i mAu i'a, dAng border-bottom */
+  /* border-bottom: 2px solid #e30019; */
+}
+
+.utility-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #333;
+  text-decoration: none;
+  font-size: 13px; /* KAch thi>c cha nha hn */
+  width: 10%; /* GiAp chAng i'ac phAn bi. i'au vA ci' i'i<nh */
+  padding: 10px 0;
+  transition: color 0.3s;
+}
+
+.utility-icon:hover {
+  color: #e30019; /* Ai.i mAu cha khi hover */
+}
+
+.utility-icon i {
+  font-size: 26px; /* KAch thi>c icon */
+  color: #e30019; /* MAu icon i'a */
+  margin-bottom: 5px;
+}
+
+.utility-icon span {
+  display: block;
+  margin-top: 5px;
+  line-height: 1.2;
+}
+/* ================================== */
+/* 3. KHU VaC FLASH SALE */
+/* ================================== */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 10px 0;
+  border-bottom: 2px solid #e30019;
+}
+
+.sale-timer {
+  font-weight: bold;
+  color: #666;
+  background-color: #fcebeb;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.sale-timer span {
+  color: #e30019;
+  font-size: 1.1em;
+}
+
+.view-all {
+  color: #e30019;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Kiifu tha san pham nha trong Flash Sale (can chi?nh lai nau khAc product-card) */
+.flashSaleSwiper .product-card-sm {
+  /* Aam bao tha san pham hiifn thi< gan trong slide */
+  width: 100%;
+  /* ... CSS cho tha san pham Flash Sale ... */
+}
+/* Trong fe/css/style.css */
+
+/* ================================== */
+/* CSS TINH CHi^NH NisT AIi?U HisNG SWIPER */
+/* ================================== */
+
+.swiper-button-next,
+.swiper-button-prev {
+  /* Tao hAnh dang trAn vA kAch thi>c li>n hn */
+  width: 50px !important; /* Chiau riTng */
+  height: 50px !important; /* Chiau cao */
+  border-radius: 50% !important; /* HAnh trAn */
+
+  /* MAu sac vA nan */
+  background-color: #fff !important; /* Nan trang (nh Fahasa) */
+  color: #333 !important; /* MAu mAi tAn xAm/i'en */
+
+  /* BAng i'i. (Box Shadow) i'if tao hii?u ang ni.i bat */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* Aam bao chAng luAn nam trAn banner vA li>p overlay */
+  z-index: 100;
+
+  /* Cifn giaa dac */
+  top: 50%;
+  transform: translateY(-50%);
+
+  /* ThAm hii?u ang chuyifn i'i.i mat mA */
+  transition: all 0.3s ease;
+}
+
+/* KAch thi>c Icon mAi tAn */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 24px !important; /* KAch thi>c icon */
+  font-weight: bold;
+}
+
+/* Hii?u ang khi di chuiTt (Hover) */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  /* Ai.i mAu icon khi hover */
+  color: #e30019 !important; /* Chuyifn sang mAu i'a */
+  /* CA thif lAm bAng i'i. i'am hn khi hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Hide arrows when not hovering over Swiper */
+/* Nau ban mui'n mAi tAn chi? hii?n khi hover (gii'ng Fahasa) */
+.swiper.mySwiper:not(:hover) .swiper-button-next,
+.swiper.mySwiper:not(:hover) .swiper-button-prev {
+  opacity: 0;
+  /* Di chuyifn ra ngoAi mAn hAnh miTt chAt khi an */
+  transform: translate(5px, -50%);
+  pointer-events: none;
+}
+/* --- CSS CHO POPUP Mif GIaM GIA --- */
+.custom-modal-overlay {
+  display: none; /* Mac i'i<nh an */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-modal-content {
+  background: #fff;
+  width: 400px;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.close-btn {
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.voucher-ticket {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff0f0;
+  border: 1px dashed #c92127;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.voucher-code {
+  font-weight: bold;
+  color: #c92127;
+  font-size: 16px;
+  display: block;
+}
+
+.voucher-ticket button {
+  background: #c92127;
+  color: #fff;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- CSS CHO FLASH SALE AREA --- */
+/* Khung chaa chung */
+.flash-sale-header {
+  display: flex; /* Sap xap cAc phan ta nam ngang */
+  align-items: center; /* Cifn giaa theo chiau dac */
+  padding: 15px; /* Khoang cAch i'i?m */
+  background: #fff; /* Nan trang */
+  border-bottom: 2px solid #c92127; /* Active underline */
+}
+
+/* TiAu i'a Flash Sale */
+.fs-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #c92127;
+  margin-right: 20px; /* CAch i'i"ng hi" ra miTt chAt */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Ai"ng hi" (Timer) */
+.fs-timer {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #333;
+}
+
+.fs-timer span {
+  background: #333;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 0 3px;
+}
+
+/* --- QUAN TRiONG: Aay nAt xem tat ca sang phai --- */
+.view-all-link {
+  margin-left: auto; /* Li?nh nAy ta i'iTng i'ay phan ta va phAa cui'i (bAn phai) */
+
+  text-decoration: none;
+  color: #007bff; /* MAu xanh */
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.2s;
+}
+
+.view-all-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+/* --- CSS CHO THANH TIi?N ACH (Daa trAn class caa ban) --- */
+
+#utility-icons-section {
+  padding: 0;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: space-around; /* Chia i'au khoang cAch */
+  align-items: center;
+  background: #fff; /* Nan trang */
+  padding: 20px 0;
+  border-radius: 8px; /* Bo gAc */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* BAng i'i. nha sang trang */
+}
+
+.utility-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none !important; /* Ba gach chAn */
+  width: 25%; /* Mi-i A chiam 1/4 */
+  border-right: 1px solid #f0f0f0; /* Category divider */
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.utility-icon:last-child {
+  border-right: none; /* Ba i'ang ka iY A cui'i */
+}
+
+/* Hii?u ang khi di chuiTt vAo */
+.utility-icon:hover {
+  transform: translateY(-3px); /* Nhac nha lAn */
+  color: #c92127; /* Ai.i mAu cha sang i'a Fahasa */
+}
+
+.utility-icon .icon-box {
+  margin-bottom: 8px;
+}
+
+.utility-icon i {
+  font-size: 28px;
+  color: #c92127; /* Icon luAn mAu i'a */
+  transition: transform 0.3s;
+}
+
+/* Khi hover thA icon phAng to xAu */
+.utility-icon:hover i {
+  transform: scale(1.1);
+}
+
+.utility-icon span {
+  font-weight: 600; /* Cha i'am */
+  font-size: 14px;
+}
+/* Trong fe/css/style.css */
+
+.flash-sale-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Aay niTi dung ra 2 bAn */
+  /* ... cAc thuiTc tAnh cA ... */
+  position: relative;
+}
+
+.view-all-link {
+  text-decoration: none;
+  color: #007bff; /* MAu xanh hoac xAm tAy ban */
+  font-size: 14px;
+  font-weight: 600;
+}
+.view-all-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+/* --- CSS for category menu beside search --- */
+
+.category-dropdown-wrapper {
+  position: relative; /* Aif cifn menu con theo nAt nAy */
+  margin-right: 15px; /* Space from the search bar */
+  z-index: 1001; /* LuAn ni.i lAn trAn */
+}
+
+/* 1. NAt Danh Mac */
+.category-btn {
+  display: flex;
+  align-items: center;
+  background-color: #fff; /* Hoac #f0f0f0 tAy nan header caa ban */
+  padding: 0 15px; /* Giam chiau cao cho gan */
+  height: 40px; /* Match search bar height */
+  border-radius: 5px; /* Bo gAc nha */
+  cursor: pointer;
+  border: 1px solid #e0e0e0; /* Vian ma */
+  transition: all 0.3s;
+  color: #333;
+}
+
+.category-btn:hover {
+  border-color: #c92127; /* Vian i'a khi hover */
+  color: #c92127;
+}
+
+.category-btn .icon-grid {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #999;
+}
+.category-btn:hover .icon-grid {
+  color: #c92127;
+}
+
+.category-btn .text {
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 20px;
+  white-space: nowrap; /* Prevent line wrapping */
+}
+
+.category-btn .icon-arrow {
+  font-size: 12px;
+  color: #999;
+  margin-left: auto;
+}
+
+/* 2. Menu Xi. Xui'ng (Dropdown) */
+.category-menu {
+  display: none; /* Mac i'i<nh an */
+  position: absolute;
+  top: 100%; /* Nam ngay di>i nAt */
+  left: 0;
+  width: 250px; /* AiT riTng menu */
+  background: #fff;
+  border: 1px solid #eee;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 5px 5px;
+  padding: 5px 0;
+  margin-top: 5px;
+}
+
+/* Hii?u ang: Hover vAo nAt cha thA hii?n menu con */
+.category-dropdown-wrapper:hover .category-menu {
+  display: block;
+  animation: fadeIn 0.2s;
+}
+
+/* 3. CAc mac trong menu (Item) */
+.cate-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  border-bottom: 1px solid #f9f9f9;
+  transition: all 0.2s;
+}
+
+.cate-menu-item:last-child {
+  border-bottom: none;
+}
+
+.cate-menu-item:hover {
+  background-color: #fcebeb; /* Nan hi"ng nhat */
+  color: #c92127; /* Cha i'a */
+  padding-left: 20px; /* Hii?u ang i'ay cha sang phai */
+  font-weight: bold;
+}
+
+.cate-menu-item i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+  color: #999;
+}
+.cate-menu-item:hover i {
+  color: #c92127;
+}
+/* --- GaI A Hi"M NAY (HOMEPAGE) --- */
+
+.daily-home-section {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.daily-home-header {
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.daily-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #c92127;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.daily-title i {
+  color: #f7941e;
+} /* Icon sao vAng */
+
+/* Tabs */
+.daily-tabs-wrapper {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.d-tab {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.d-tab img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.d-tab:hover {
+  border-color: #c92127;
+  color: #c92127;
+  background: #fff5f5;
+}
+
+.d-tab.active {
+  background: #c92127;
+  color: #fff;
+  border-color: #c92127;
+  box-shadow: 0 4px 8px rgba(201, 33, 39, 0.2);
+}
+
+/* Li>i san pham (TAi sa dang style caa grid san pham) */
+.daily-grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+/* NAt Xem thAm */
+.daily-load-more {
+  text-align: center;
+  margin-top: 30px;
+}
+#btn-home-load-more {
+  background: #fff;
+  border: 1px solid #c92127;
+  color: #c92127;
+  padding: 10px 50px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#btn-home-load-more:hover {
+  background: #c92127;
+  color: #fff;
+}
+
+/* Reponsive */
+@media (max-width: 768px) {
+  .daily-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* fe/css/style.css */
+
+.daily-load-more {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0; /* ThAm i'ang ka ma ngifn cAch */
+}
+
+/* Style cho nAt chuyifn trang */
+.btn-home-view-all {
+  display: inline-block; /* Aif chi?nh i'ac padding/margin */
+  text-decoration: none; /* Ba gach chAn */
+  background: #fff;
+  border: 2px solid #c92127; /* Vian i'a i'am hn chAt */
+  color: #c92127;
+  padding: 10px 60px; /* NAt dAi ra cho i'ap */
+  border-radius: 8px; /* Bo gAc trAn hn */
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(201, 33, 39, 0.1);
+}
+
+.btn-home-view-all:hover {
+  background: #c92127;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(201, 33, 39, 0.3);
+  transform: translateY(-2px); /* Nhac nha nAt lAn khi hover */
+}
+
+.btn-home-view-all i {
+  margin-left: 5px;
+  font-size: 12px;
+}
+/* --- CSS GaI A TiOM KIaM (AUTOCOMPLETE) --- */
+
+.suggestions-dropdown {
+  display: none; /* Mac i'i<nh an */
+  position: absolute;
+  top: 100%; /* Position right below search bar */
+  left: 0;
+  width: 100%; /* Same width as search bar */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* LuAn ni.i lAn trAn cAng */
+  max-height: 400px; /* Chiau cao ti'i i'a */
+  overflow-y: auto; /* CuiTn nau danh sAch dAi */
+}
+
+/* Tang dAng gai A */
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f5f5f5;
+  transition: background 0.2s;
+  text-decoration: none; /* VA mAnh sa dAng tha a */
+}
+
+.suggestion-item:hover {
+  background-color: #f9f9f9;
+}
+
+.suggestion-item img {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.suggestion-info h4 {
+  font-size: 14px;
+  margin: 0 0 4px;
+  color: #333;
+  font-weight: 600;
+}
+
+.suggestion-info .price {
+  font-size: 13px;
+  color: #c92127;
+  font-weight: bold;
+}
+/* --- STYLE CHI TIaT SaN PHaM (Detail Page) --- */
+
+/* Khung chaa anh vA thAng tin */
+.product-detail-layout {
+  display: flex;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  gap: 30px;
+}
+
+/* CiTt trAi: anh */
+.detail-left {
+  width: 40%;
+  text-align: center;
+  border-right: 1px solid #eee;
+  padding-right: 20px;
+}
+.detail-left img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+/* CiTt phai: ThAng tin */
+.detail-right {
+  width: 60%;
+}
+.detail-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+.detail-meta {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 15px;
+}
+.detail-meta span {
+  color: #333;
+  font-weight: bold;
+}
+
+.detail-price-box {
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.d-current-price {
+  font-size: 32px;
+  color: #c92127;
+  font-weight: bold;
+}
+.d-old-price {
+  font-size: 16px;
+  color: #999;
+  text-decoration: line-through;
+}
+.d-discount-badge {
+  background: #c92127;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.btn-buy-now {
+  background: #c92127;
+  color: #fff;
+  border: none;
+  padding: 12px 50px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: block;
+  margin-top: 20px;
+}
+.btn-buy-now:hover {
+  background: #a0151a;
+  box-shadow: 0 4px 10px rgba(201, 33, 39, 0.3);
+}
+
+/* Khu vac AAnh giA */
+.review-container {
+  background: #fff;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+.review-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.review-body {
+  display: flex;
+  gap: 30px;
+}
+.write-review-area {
+  width: 35%;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  height: fit-content;
+}
+.review-list-area {
+  width: 65%;
+}
+
+/* Review stars */
+.star-rating-widget i {
+  font-size: 24px;
+  color: #ddd;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.star-rating-widget i.active {
+  color: #f7941e;
+}
+
+.review-textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+}
+.btn-submit-review {
+  width: 100%;
+  padding: 10px;
+  background: #f7941e;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Review Item */
+.user-review-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  background: #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #555;
+}
+.star-display {
+  color: #f7941e;
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+  .product-detail-layout {
+    flex-direction: column;
+  }
+  .detail-left {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+  .detail-right {
+    width: 100%;
+  }
+  .review-body {
+    flex-direction: column;
+  }
+  .write-review-area,
+  .review-list-area {
+    width: 100%;
+  }
+}
+/* --- STYLE TRANG CHI TIaT SaN PHaM --- */
+
+/* 1. Layout San pham (anh trAi - Tin phai) */
+.product-detail-layout {
+    display: flex;
+    gap: 40px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.detail-left {
+    width: 40%;
+    flex-shrink: 0;
+    text-align: center;
+}
+.detail-left img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.detail-right { flex: 1; }
+.detail-title { font-size: 26px; font-weight: bold; color: #333; margin-bottom: 15px; line-height: 1.3; }
+.detail-meta { font-size: 14px; color: #777; margin-bottom: 20px; }
+.detail-meta span { color: #333; font-weight: 500; }
+
+.detail-price-box {
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+.d-price-current { font-size: 36px; color: #C92127; font-weight: bold; margin-right: 15px; }
+.d-price-old { font-size: 18px; color: #999; text-decoration: line-through; }
+.d-discount-badge { background: #C92127; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 14px; font-weight: bold; }
+
+.btn-buy-now {
+    background: #C92127; color: #fff;
+    border: none; padding: 15px 50px;
+    font-size: 18px; font-weight: bold;
+    border-radius: 4px; cursor: pointer;
+    min-width: 250px;
+    transition: 0.3s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-buy-now:hover { background: #a81a1f; box-shadow: 0 4px 10px rgba(201,33,39,0.3); }
+
+/* 2. Style Khu vac AAnh giA (Review) */
+.review-container {
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    padding: 30px;
+}
+
+.review-header {
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 30px;
+}
+.review-header h3 { font-size: 20px; margin: 0; color: #333; text-transform: uppercase; }
+
+.review-body { display: flex; gap: 40px; }
+
+/* Write review section */
+.write-review-area {
+    width: 35%;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 25px;
+    border-radius: 8px;
+    height: fit-content;
+}
+.write-review-area h4 { margin-top: 0; margin-bottom: 15px; font-size: 16px; }
+
+/* NgAi sao tng tAc */
+.star-rating-widget { margin-bottom: 20px; }
+.star-rating-widget i {
+    font-size: 28px;
+    color: #ddd;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: 0.2s;
+}
+.star-rating-widget i.active,
+.star-rating-widget i:hover,
+.star-rating-widget i:hover ~ i { color: #F7941E; }
+
+.review-textarea {
+    width: 100%; padding: 12px;
+    border: 1px solid #ddd; border-radius: 4px;
+    font-family: inherit; font-size: 14px;
+    margin-bottom: 15px; resize: none;
+}
+.review-textarea:focus { border-color: #C92127; outline: none; }
+
+.btn-submit-review {
+    width: 100%; background: #F7941E; color: white;
+    border: none; padding: 12px; border-radius: 4px;
+    font-weight: bold; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: 0.3s;
+}
+.btn-submit-review:hover { background: #e08316; }
+
+/* Review list section */
+.review-list-area { flex: 1; }
+.review-list-area h4 { margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #eee; display: block; padding-bottom: 10px; font-size: 16px; }
+
+.user-review-item {
+    display: flex; gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.user-review-item:last-child { border-bottom: none; }
+
+.avatar-circle {
+    width: 50px; height: 50px;
+    background: #eee; color: #777;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 20px;
+}
+.review-content { flex: 1; }
+.review-author { font-weight: bold; font-size: 15px; margin-bottom: 5px; color: #333; }
+.review-time { font-size: 13px; color: #999; }
+.star-display { color: #F7941E; font-size: 14px; margin: 8px 0; }
+.comment-text { font-size: 15px; color: #333; line-height: 1.6; background: #fafafa; padding: 15px; border-radius: 6px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-detail-layout { flex-direction: column; padding: 20px; }
+    .detail-left, .detail-right { width: 100%; }
+    .review-body { flex-direction: column; }
+    .write-review-area, .review-list-area { width: 100%; }
+    .write-review-area { order: 1; } /* Aa form lAn trAn trAn mobile */
+}
+/* --- STYLE TRANG CHI TIaT SaN PHaM --- */
+
+/* 1. Layout San pham (anh trAi - Tin phai) */
+.product-detail-layout {
+    display: flex;
+    gap: 40px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.detail-left {
+    width: 40%;
+    flex-shrink: 0;
+    text-align: center;
+}
+.detail-left img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.detail-right { flex: 1; }
+.detail-title { font-size: 26px; font-weight: bold; color: #333; margin-bottom: 15px; line-height: 1.3; }
+.detail-meta { font-size: 14px; color: #777; margin-bottom: 20px; }
+.detail-meta span { color: #333; font-weight: 500; }
+
+.detail-price-box {
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+.d-price-current { font-size: 36px; color: #C92127; font-weight: bold; margin-right: 15px; }
+.d-price-old { font-size: 18px; color: #999; text-decoration: line-through; }
+.d-discount-badge { background: #C92127; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 14px; font-weight: bold; }
+
+.btn-buy-now {
+    background: #C92127; color: #fff;
+    border: none; padding: 15px 50px;
+    font-size: 18px; font-weight: bold;
+    border-radius: 4px; cursor: pointer;
+    min-width: 250px;
+    transition: 0.3s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-buy-now:hover { background: #a81a1f; box-shadow: 0 4px 10px rgba(201,33,39,0.3); }
+
+/* 2. Style Khu vac AAnh giA (Review) */
+.review-container {
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    padding: 30px;
+}
+
+.review-header {
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 30px;
+}
+.review-header h3 { font-size: 20px; margin: 0; color: #333; text-transform: uppercase; }
+
+.review-body { display: flex; gap: 40px; }
+
+/* Write review section */
+.write-review-area {
+    width: 35%;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 25px;
+    border-radius: 8px;
+    height: fit-content;
+}
+.write-review-area h4 { margin-top: 0; margin-bottom: 15px; font-size: 16px; }
+
+/* NgAi sao tng tAc */
+.star-rating-widget { margin-bottom: 20px; }
+.star-rating-widget i {
+    font-size: 28px;
+    color: #ddd;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: 0.2s;
+}
+.star-rating-widget i.active,
+.star-rating-widget i:hover,
+.star-rating-widget i:hover ~ i { color: #F7941E; }
+
+.review-textarea {
+    width: 100%; padding: 12px;
+    border: 1px solid #ddd; border-radius: 4px;
+    font-family: inherit; font-size: 14px;
+    margin-bottom: 15px; resize: none;
+}
+.review-textarea:focus { border-color: #C92127; outline: none; }
+
+.btn-submit-review {
+    width: 100%; background: #F7941E; color: white;
+    border: none; padding: 12px; border-radius: 4px;
+    font-weight: bold; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: 0.3s;
+}
+.btn-submit-review:hover { background: #e08316; }
+
+/* Review list section */
+.review-list-area { flex: 1; }
+.review-list-area h4 { margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #eee; display: block; padding-bottom: 10px; font-size: 16px; }
+
+.user-review-item {
+    display: flex; gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.user-review-item:last-child { border-bottom: none; }
+
+.avatar-circle {
+    width: 50px; height: 50px;
+    background: #eee; color: #777;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 20px;
+}
+.review-content { flex: 1; }
+.review-author { font-weight: bold; font-size: 15px; margin-bottom: 5px; color: #333; }
+.review-time { font-size: 13px; color: #999; }
+.star-display { color: #F7941E; font-size: 14px; margin: 8px 0; }
+.comment-text { font-size: 15px; color: #333; line-height: 1.6; background: #fafafa; padding: 15px; border-radius: 6px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-detail-layout { flex-direction: column; padding: 20px; }
+    .detail-left, .detail-right { width: 100%; }
+    .review-body { flex-direction: column; }
+    .write-review-area, .review-list-area { width: 100%; }
+    .write-review-area { order: 1; } /* Aa form lAn trAn trAn mobile */
+}
+/* =========================================
+   CSS FLASH SALE (Ci,N CHi^NH Ai?U)
+   ========================================= */
+
+/* 1. Khung chaa danh sAch (CuiTn ngang) */
+.flash-sale-list {
+    display: flex;              /* Xap hAng ngang */
+    gap: 15px;                  /* Khoang cAch giaa cAc tha */
+    overflow-x: auto;           /* Cho phAp cuiTn ngang */
+    padding: 15px 5px 25px 5px; /* Padding to avoid bottom clipping */
+    background: #fff;
+    scroll-behavior: smooth;
+}
+
+/* an thanh cuiTn xau xA (TAy chan) */
+.flash-sale-list::-webkit-scrollbar { height: 6px; }
+.flash-sale-list::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 4px; }
+
+/* 2. Tha San Pham Compact (Ci' i'i<nh kAch thi>c) */
+.fs-card-compact {
+    flex: 0 0 auto;             /* Important: prevent flex growth */
+    width: 190px;               /* Chiau riTng ci' i'i<nh */
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    transition: all 0.3s ease;
+    
+    /* Flex dac i'if i'ay niTi dung cho i'au */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.fs-card-compact:hover {
+    border-color: #C92127;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+/* 3. Khung anh (Ci' i'i<nh chiau cao) */
+.fs-img-container {
+    width: 100%;
+    height: 170px;              /* Chiau cao anh ci' i'i<nh */
+    display: flex;
+    align-items: center;        /* Cifn giaa dac */
+    justify-content: center;    /* Cifn giaa ngang */
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.fs-img-container img {
+    max-height: 100%;           /* image stays within frame */
+    width: auto;
+    transition: transform 0.3s;
+}
+
+.fs-card-compact:hover .fs-img-container img {
+    transform: scale(1.05);
+}
+
+/* 4. TAn sAch (Cat dAng nau quA dAi) */
+.fs-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
+    height: 38px;               /* Chiau cao ci' i'i<nh cho 2 dAng cha */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;      /* Gii>i han 2 dAng */
+    -webkit-box-orient: vertical;
+    margin-bottom: 8px;
+}
+
+.fs-name:hover { color: #C92127; }
+
+/* 5. GiA tian */
+.fs-price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.fs-price {
+    color: #C92127;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.fs-old-price {
+    color: #999;
+    font-size: 12px;
+    text-decoration: line-through;
+}
+
+/* 6. Thanh tian trAnh (AA bAn) */
+.fs-progress-bar {
+    height: 16px;
+    background-color: #fddccb;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.fs-progress-fill {
+    background-color: #E30019;
+    height: 100%;
+    border-radius: 10px 0 0 10px;
+}
+
+.fs-progress-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 0 2px rgba(0,0,0,0.3);
+    white-space: nowrap;
+}
+
+/* Badge giam giA */
+.fs-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #C92127;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    z-index: 2;
+}
+/* Page styles */
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.page-header h1 {
+    color: var(--primary-color);
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 16px;
+}
+
+/* About page */
+.about-section h2 {
+    color: #333;
+    margin: 30px 0 15px 0;
+    border-left: 4px solid var(--primary-color);
+    padding-left: 15px;
+}
+
+.about-section ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.about-section li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Career page */
+.career-item {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary-color);
+}
+
+.career-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.btn-apply {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-apply:hover {
+    background: var(--primary-dark);
+}
+
+/* Contact info */
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.contact-item {
+    background: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.contact-item i {
+    font-size: 40px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.contact-item h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* FAQ */
+.faq-item {
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid #28a745;
+}
+
+.faq-item h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Guide steps */
+.guide-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.step {
+    background: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    position: relative;
+}
+
+.step-number {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Policy content */
+.policy-content h2 {
+    color: #333;
+    margin: 25px 0 15px 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.policy-content ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+/* Shipping methods */
+.shipping-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.method {
+    background: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.method:hover {
+    border-color: var(--primary-color);
+}
+
+.method i {
+    font-size: 40px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.method .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 10px;
+}
+
+/* Forms */
+.contact-form,
+.support-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(201, 33, 39, 0.1);
+}
+
+.btn-submit {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.btn-submit:hover {
+    background: var(--primary-dark);
+}
+
+/* Support options */
+.support-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.support-card {
+    background: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    transition: 0.3s;
+}
+
+.support-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+.support-card i {
+    font-size: 40px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+/* Footer links */
+.footer-col p a {
+    color: #666;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-col p a:hover {
+    color: var(--primary-color);
+    padding-left: 5px;
+}
+/* --- 6. FOOTER --- */
+.footer {
+  background: white;
+  margin-top: 50px;
+  padding-top: 40px;
+  border-top: 4px solid var(--primary-color);
+  width: 100%;
+  overflow: hidden;
+}
+
+.footer .container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-col h3 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.footer-col p {
+  margin-bottom: 12px;
+  color: #666;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-col p a {
+  color: #666;
+  text-decoration: none;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-col p a:hover {
+  color: var(--primary-color);
+  padding-left: 5px;
+}
+
+.footer-col i {
+  width: 16px;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 25px;
+  border-top: 1px solid #eee;
+  margin-top: 40px;
+  color: #999;
+  font-size: 14px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .footer .container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding-top: 30px;
+    margin-top: 30px;
+  }
+  
+  .footer .container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 0 15px;
+  }
+  
+  .footer-col {
+    text-align: left;
+  }
+  
+  .footer-col h3 {
+    margin-bottom: 15px;
+  }
+  
+  .footer-col p {
+    margin-bottom: 10px;
+  }
+  
+  .footer-bottom {
+    padding: 20px 15px;
+    margin-top: 30px;
+  }
+}
+
+/* Ensure main container does not overflow */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}

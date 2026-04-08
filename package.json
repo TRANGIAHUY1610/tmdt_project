@@ -1,0 +1,13 @@
+{
+  "name": "gym-project",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Workspace scripts for GymStore",
+  "scripts": {
+    "setup": "npm --prefix backend install",
+    "dev": "npm --prefix backend run dev",
+    "start": "npm --prefix backend start",
+    "check": "npm --prefix backend run check",
+    "test": "npm --prefix backend test"
+  }
+}
