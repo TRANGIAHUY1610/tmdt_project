@@ -328,3 +328,36 @@ body {
     flex-wrap: wrap;
   }
 }
+/* Responsive */
+@media (max-width: 768px) {
+  .footer {
+    padding-top: 30px;
+    margin-top: 30px;
+  }
+
+  .footer .container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 0 15px;
+  }
+
+  .footer-col {
+    text-align: left;
+  }
+
+  .footer-bottom {
+    padding: 20px 15px;
+    margin-top: 30px;
+  }
+}
+
+/* ===== 📱 Mobile nhỏ ===== */
+@media (max-width: 480px) {
+  .footer-col h3 {
+    font-size: 16px;
+  }
+
+  .footer-col p {
+    font-size: 14px;
+  }
+}
