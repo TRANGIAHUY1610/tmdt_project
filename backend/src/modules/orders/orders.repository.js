@@ -1,4 +1,4 @@
-﻿const { dbHelpers } = require("../../config/database");
+const { dbHelpers } = require("../../config/database");
 
 class OrdersRepository {
   async countCartItems(userId) {
@@ -30,7 +30,7 @@ class OrdersRepository {
         @customer_note,
         @shipping_fee,
         @total_amount,
-        'pending',
+        @status,
         NOW()
       )
     `;
@@ -41,9 +41,9 @@ class OrdersRepository {
   async copyCartItemsToOrder(orderId, userId) {
     const sql = `
       INSERT INTO order_items (order_id, product_id, quantity, price, subtotal)
-      SELECT @orderId, c.product_id, c.quantity, b.price, (c.quantity * b.price)
+      SELECT @orderId, c.product_id, c.quantity, p.price, (c.quantity * p.price)
       FROM carts c
-      JOIN products b ON c.product_id = b.id
+      JOIN products p ON c.product_id = p.id
       WHERE c.user_id = @userId
     `;
 
@@ -51,7 +51,10 @@ class OrdersRepository {
   }
 
   async clearUserCart(userId) {
-    return dbHelpers.execute("DELETE FROM carts WHERE user_id = @userId", { userId });
+    return dbHelpers.execute(
+      "DELETE FROM carts WHERE user_id = @userId",
+      { userId }
+    );
   }
 
   async getOrdersByUser(userId) {
@@ -60,7 +63,20 @@ class OrdersRepository {
       { userId }
     );
   }
+
+  // 🔥 ADMIN
+  async getAllOrders() {
+    return dbHelpers.query(
+      "SELECT * FROM orders ORDER BY created_at DESC"
+    );
+  }
+
+  async confirmOrder(orderNumber) {
+    return dbHelpers.execute(
+      "UPDATE orders SET status = 'paid' WHERE order_number = @orderNumber",
+      { orderNumber }
+    );
+  }
 }
 
 module.exports = new OrdersRepository();
-
