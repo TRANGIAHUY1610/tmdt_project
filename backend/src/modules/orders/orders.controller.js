@@ -4,12 +4,10 @@ const { success, failure } = require("../../shared/response");
 class OrdersController {
   async createOrder(req, res) {
     const result = await ordersService.createOrder(req.user.id, req.body);
-
     if (result.error) {
       return failure(res, result.error.message, result.error.statusCode);
     }
-
-    return success(res, result.data, result.message, result.statusCode);
+    return success(res, result.data, result.message, result.statusCode || 201);
   }
 
   async getMyOrders(req, res) {
@@ -17,17 +15,25 @@ class OrdersController {
     return success(res, result.data);
   }
 
-  // 🔥 ADMIN
-  async getAllOrders(req, res) {
-    const result = await ordersService.getAllOrders();
+  async getOrderById(req, res) {
+    console.log(`[Controller Debug] Entering getOrderById with id: ${req.params.id}`);
+    const orderId = parseInt(req.params.id, 10);
+    if (!orderId) return failure(res, "ID đơn hàng không hợp lệ", 400);
+    const result = await ordersService.getOrderById(orderId, req.user.id);
+    if (result.error) {
+      return failure(res, result.error.message, result.error.statusCode);
+    }
     return success(res, result.data);
   }
 
-  async confirmOrder(req, res) {
-    const { order_number } = req.body;
-
-    const result = await ordersService.confirmOrder(order_number);
-    return success(res, "Đã xác nhận đơn");
+  async cancelOrder(req, res) {
+    const orderId = parseInt(req.params.id, 10);
+    if (!orderId) return failure(res, "ID đơn hàng không hợp lệ", 400);
+    const result = await ordersService.cancelOrder(orderId, req.user.id);
+    if (result.error) {
+      return failure(res, result.error.message, result.error.statusCode);
+    }
+    return success(res, result.data, result.message);
   }
 }
 
