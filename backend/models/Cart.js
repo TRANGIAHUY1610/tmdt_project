@@ -105,13 +105,11 @@ function renderCart(items) {
                 <td style="vertical-align: middle;">${formatMoney(price)}</td>
                 <td style="vertical-align: middle;">
                     <div style="display:flex; align-items:center; gap:5px;">
-                        <button class="qty-btn" onclick="updateQty(${id}, ${
-        quantity - 1
-      })">-</button>
+                        <button class="qty-btn" onclick="updateQty(${id}, ${quantity - 1
+        })">-</button>
                         <span style="font-weight:bold; min-width:30px; text-align:center;">${quantity}</span>
-                        <button class="qty-btn" onclick="updateQty(${id}, ${
-        quantity + 1
-      })">+</button>
+                        <button class="qty-btn" onclick="updateQty(${id}, ${quantity + 1
+        })">+</button>
                     </div>
                 </td>
                 <td style="vertical-align: middle; color:#d63031; font-weight:bold;">
@@ -178,8 +176,6 @@ function checkout() {
   alert("Tính năng thanh toán sẽ sớm ra mắt!");
 }
 
-// ===============================
-// 🔥 AUTO FIX CART EMPTY (KHÔNG ĐỤNG CODE CŨ)
 // ===============================
 
 async function forceCheckCartEmpty() {
