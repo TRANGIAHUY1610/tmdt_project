@@ -30,7 +30,7 @@ class OrdersRepository {
         @customer_note,
         @shipping_fee,
         @total_amount,
-        @status,
+        'pending',
         NOW()
       )
     `;
@@ -41,9 +41,9 @@ class OrdersRepository {
   async copyCartItemsToOrder(orderId, userId) {
     const sql = `
       INSERT INTO order_items (order_id, product_id, quantity, price, subtotal)
-      SELECT @orderId, c.product_id, c.quantity, p.price, (c.quantity * p.price)
+      SELECT @orderId, c.product_id, c.quantity, b.price, (c.quantity * b.price)
       FROM carts c
-      JOIN products p ON c.product_id = p.id
+      JOIN products b ON c.product_id = b.id
       WHERE c.user_id = @userId
     `;
 
@@ -51,10 +51,7 @@ class OrdersRepository {
   }
 
   async clearUserCart(userId) {
-    return dbHelpers.execute(
-      "DELETE FROM carts WHERE user_id = @userId",
-      { userId }
-    );
+    return dbHelpers.execute("DELETE FROM carts WHERE user_id = @userId", { userId });
   }
 
   async getOrdersByUser(userId) {
@@ -64,19 +61,33 @@ class OrdersRepository {
     );
   }
 
-  // 🔥 ADMIN
-  async getAllOrders() {
+  async getOrderItems(orderId) {
     return dbHelpers.query(
-      "SELECT * FROM orders ORDER BY created_at DESC"
+      `
+      SELECT oi.*, p.title, p.image_url
+      FROM order_items oi
+      JOIN products p ON oi.product_id = p.id
+      WHERE oi.order_id = @orderId
+      `,
+      { orderId }
     );
   }
 
-  async confirmOrder(orderNumber) {
+  async getOrderById(orderId) {
+    const rows = await dbHelpers.query(
+      "SELECT * FROM orders WHERE id = @orderId",
+      { orderId }
+    );
+    return rows[0];
+  }
+
+  async updateOrderStatus(orderId, status) {
     return dbHelpers.execute(
-      "UPDATE orders SET status = 'paid' WHERE order_number = @orderNumber",
-      { orderNumber }
+      "UPDATE orders SET status = @status WHERE id = @orderId",
+      { status, orderId }
     );
   }
 }
 
 module.exports = new OrdersRepository();
+
