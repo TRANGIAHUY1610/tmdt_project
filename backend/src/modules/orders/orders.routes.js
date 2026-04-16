@@ -8,7 +8,31 @@ const { authenticate } = require("../../../middleware/auth");
 
 const router = express.Router();
 
-router.post("/", authenticate, validate(createOrderSchema), asyncHandler((req, res) => ordersController.createOrder(req, res)));
-router.get("/my-orders", authenticate, asyncHandler((req, res) => ordersController.getMyOrders(req, res)));
+// ===== USER =====
+router.post(
+  "/",
+  authenticate,
+  validate(createOrderSchema),
+  asyncHandler((req, res) => ordersController.createOrder(req, res))
+);
+
+router.get(
+  "/my-orders",
+  authenticate,
+  asyncHandler((req, res) => ordersController.getMyOrders(req, res))
+);
+
+// ===== ADMIN =====
+router.get(
+  "/",
+  authenticate,
+  asyncHandler((req, res) => ordersController.getAllOrders(req, res))
+);
+
+router.post(
+  "/confirm",
+  authenticate,
+  asyncHandler((req, res) => ordersController.confirmOrder(req, res))
+);
 
 module.exports = router;
