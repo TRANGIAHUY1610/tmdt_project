@@ -1,149 +1,208 @@
-<!DOCTYPE html>
-<html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thanh toán - GymStore</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body style="background-color: #f0f2f5">
-    <header class="header">
-      <div class="container header-container">
-        <a href="../index.html" class="logo">
-          <i class="fas fa-dumbbell"></i> GYMSTORE
-        </a>
-        <div
-          style="
-            flex: 1;
-            text-align: right;
-            font-size: 18px;
-            color: var(--primary-color);
-            font-weight: bold;
-            border-left: 2px solid #ddd;
-            padding-left: 20px;
-            margin-left: 20px;
-          "
-        >
-          THANH TOÁN
-        </div>
+let cartTotal = 0;
+const SHIPPING_FEE = 30000;
+
+let currentOrderId = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Vui lòng đăng nhập để thanh toán!");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user && user.name) {
+    document.getElementById("customer-name").value = user.name;
+  }
+
+  loadCheckoutCart();
+  setupPaymentToggle();
+});
+
+async function loadCheckoutCart() {
+  const token = localStorage.getItem("token");
+  try {
+    const res = await fetch(`${API_BASE}/cart`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const result = await res.json();
+
+    const items = Array.isArray(result) ? result : result.data || [];
+
+    if (items.length === 0) {
+      alert("Giỏ hàng đang trống!");
+      window.location.href = "../index.html";
+      return;
+    }
+
+    renderOrderSummary(items);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function renderOrderSummary(items) {
+  const container = document.getElementById("order-items-list");
+  let html = "";
+  cartTotal = 0;
+
+  const formatMoney = (amount) =>
+    new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(amount);
+
+  items.forEach((item) => {
+    const total = (item.price || 0) * item.quantity;
+    cartTotal += total;
+
+    html += `
+      <div class="mini-item">
+        <span>${item.quantity}x</span>
+        <span>${item.title}</span>
+        <span>${formatMoney(total)}</span>
       </div>
-    </header>
+    `;
+  });
 
-    <main class="container cart-page">
-      <form id="checkout-form" onsubmit="handleCheckout(event)">
-        <div class="cart-layout">
-          <div class="cart-items-col">
+  container.innerHTML = html;
 
-            <h3 style="margin-bottom: 20px; border-bottom: 1px solid #eee;">
-              <i class="fas fa-map-marker-alt"></i> Thông tin giao hàng
-            </h3>
+  document.getElementById("sub-total").innerText = formatMoney(cartTotal);
+  document.getElementById("shipping-fee").innerText = formatMoney(SHIPPING_FEE);
+  document.getElementById("final-total").innerText = formatMoney(
+    cartTotal + SHIPPING_FEE
+  );
+}
 
-            <div class="form-group">
-              <label>Người nhận</label>
-              <input type="text" id="customer-name" class="form-control" required />
-            </div>
+// ===============================
+// 🔥 QR LOGIC
+// ===============================
+function setupPaymentToggle() {
+  const radios = document.querySelectorAll('input[name="payment"]');
+  const qrSection = document.getElementById("qr-section");
 
-            <div class="form-group">
-              <label>Số điện thoại (*)</label>
-              <input type="tel" id="phone" class="form-control" required />
-            </div>
+  radios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (radio.value === "banking" && radio.checked) {
+        generateQR();
+        qrSection.style.display = "block";
+      } else {
+        qrSection.style.display = "none";
+      }
+    });
+  });
+}
 
-            <div class="form-group">
-              <label>Địa chỉ giao hàng (*)</label>
-              <input type="text" id="address" class="form-control" required />
-            </div>
+function generateQR() {
+  const total = cartTotal + SHIPPING_FEE;
 
-            <div class="form-group">
-              <label>Ghi chú</label>
-              <textarea id="note" class="form-control"></textarea>
-            </div>
+  currentOrderId = "DH" + Date.now();
 
-            <!-- ===== PAYMENT ===== -->
-            <h3 style="margin: 30px 0 15px 0;">
-              <i class="fas fa-wallet"></i> Phương thức thanh toán
-            </h3>
+  document.getElementById("qr-content").innerText = currentOrderId;
 
-            <div class="payment-methods">
+  const qrUrl = `https://img.vietqr.io/image/MB-123456789-compact.png?amount=${total}&addInfo=${currentOrderId}`;
 
-              <!-- COD -->
-              <label class="payment-option">
-                <input type="radio" name="payment" value="cod" checked />
-                <div class="payment-content">
-                  <img src="https://cdn-icons-png.flaticon.com/512/2331/2331941.png"/>
-                  <span>Thanh toán khi nhận hàng (COD)</span>
-                </div>
-              </label>
+  document.getElementById("qr-image").src = qrUrl;
+}
 
-              <!-- QR -->
-              <label class="payment-option">
-                <input type="radio" name="payment" value="banking" />
-                <div class="payment-content">
-                  <img src="https://cdn-icons-png.flaticon.com/512/2175/2175515.png"/>
-                  <span>Chuyển khoản ngân hàng (QR code)</span>
-                </div>
-              </label>
-            </div>
+// ===============================
+// 🔥 XÁC NHẬN THANH TOÁN QR
+// ===============================
+async function confirmPaid() {
+  const token = localStorage.getItem("token");
 
-            <!-- 🔥 QR SECTION -->
-            <div id="qr-section" style="display:none; margin-top:20px;">
-              <h4>Quét mã QR để thanh toán</h4>
+  // 👉 lấy dữ liệu form
+  const name = document.getElementById("customer-name").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
+  const note = document.getElementById("note").value;
 
-              <div style="text-align:center;">
-                <img id="qr-image" src="" width="230" />
-              </div>
+  if (!currentOrderId) {
+    alert("Vui lòng quét QR trước!");
+    return;
+  }
 
-              <p>
-                Ngân hàng: MB Bank <br />
-                STK: <b>123456789</b><br />
-                Nội dung: <b id="qr-content">DH001</b>
-              </p>
+  const fullAddress = `${name} (${phone}) - ${address}`;
 
-              <button type="button" onclick="confirmPaid()" class="btn-checkout">
-                Tôi đã thanh toán
-              </button>
-            </div>
+  const orderData = {
+    shipping_address: fullAddress,
+    customer_note: note,
+    payment_method: "banking",
+    shipping_fee: SHIPPING_FEE,
+    total_amount: cartTotal + SHIPPING_FEE,
+    order_code: currentOrderId,
+  };
 
-          </div>
+  try {
+    await fetch(`${API_BASE}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(orderData),
+    });
 
-          <!-- ===== RIGHT SIDE ===== -->
-          <div class="cart-summary-col">
-            <h3>Đơn hàng của bạn</h3>
+    alert("Thanh toán thành công! Đơn hàng đã được ghi nhận.");
 
-            <div id="order-items-list">
-              <p>Đang tải...</p>
-            </div>
+    // 👉 quay về trang chủ
+    window.location.href = "../index.html";
 
-            <div class="summary-row">
-              <span>Tạm tính:</span>
-              <span id="sub-total">0</span>
-            </div>
+  } catch (err) {
+    console.error(err);
+    alert("Lỗi khi xác nhận thanh toán!");
+  }
+}
 
-            <div class="summary-row">
-              <span>Phí vận chuyển:</span>
-              <span id="shipping-fee">30.000</span>
-            </div>
+// ===============================
+// 🛒 CHECKOUT (COD)
+// ===============================
+async function handleCheckout(e) {
+  e.preventDefault();
 
-            <div class="summary-total">
-              <span>Tổng cộng:</span>
-              <span id="final-total">0</span>
-            </div>
+  const paymentMethod = document.querySelector(
+    'input[name="payment"]:checked'
+  ).value;
 
-            <button type="submit" class="btn-checkout">ĐẶT HÀNG</button>
+  // 👉 nếu chọn QR thì KHÔNG dùng nút đặt hàng
+  if (paymentMethod === "banking") {
+    alert("Vui lòng quét QR và bấm 'Tôi đã thanh toán'");
+    return;
+  }
 
-            <a href="cart.html">
-              ← Quay lại giỏ hàng
-            </a>
-          </div>
+  const name = document.getElementById("customer-name").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
+  const note = document.getElementById("note").value;
 
-        </div>
-      </form>
-    </main>
+  const fullAddress = `${name} (${phone}) - ${address}`;
 
-    <script src="../js/api.js"></script>
-    <script src="../js/checkout.js"></script>
-  </body>
-</html>
+  const orderData = {
+    shipping_address: fullAddress,
+    customer_note: note,
+    payment_method: "cod",
+    shipping_fee: SHIPPING_FEE,
+    total_amount: cartTotal + SHIPPING_FEE,
+  };
+
+  const token = localStorage.getItem("token");
+
+  try {
+    await fetch(`${API_BASE}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(orderData),
+    });
+
+    alert("Đặt hàng thành công!");
+    window.location.href = "../index.html";
+
+  } catch (err) {
+    console.error(err);
+    alert("Lỗi server!");
+  }
+}
