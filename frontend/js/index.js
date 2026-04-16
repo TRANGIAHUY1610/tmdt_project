@@ -1,4 +1,4 @@
-﻿// fe/js/index.js
+// fe/js/index.js
 
 // Aam bao bian API_BASE i'A cA
 // const API_BASE = "http://localhost:5000/api";
@@ -565,6 +565,43 @@ document.addEventListener("click", function (e) {
   if (searchBar && !searchBar.contains(e.target)) {
     if (suggestionBox) suggestionBox.style.display = "none";
   }
-});
+});// ===============================
+// 🔥 FORCE UPDATE CART COUNT (INDEX)
+// ===============================
 
+async function refreshCartUI() {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const res = await fetch(`${API_BASE}/cart`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    const result = await res.json();
+    const items = result.data || result;
+
+    // 👉 Tổng số lượng
+    let totalQty = 0;
+    items.forEach((item) => {
+      totalQty += item.quantity;
+    });
+
+    // 👉 Update icon cart (tuỳ bạn đặt id gì)
+    const cartCount = document.getElementById("cart-count");
+
+    if (cartCount) {
+      cartCount.innerText = totalQty;
+    }
+  } catch (err) {
+    console.error("Refresh cart error:", err);
+  }
+}
+
+// 🔥 chạy mỗi khi load trang
+window.addEventListener("load", () => {
+  setTimeout(refreshCartUI, 500);
+});
 
