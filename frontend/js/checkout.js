@@ -1,138 +1,149 @@
-let cartTotal = 0;
-const SHIPPING_FEE = 30000;
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanh toán - GymStore</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="background-color: #f0f2f5">
+    <header class="header">
+      <div class="container header-container">
+        <a href="../index.html" class="logo">
+          <i class="fas fa-dumbbell"></i> GYMSTORE
+        </a>
+        <div
+          style="
+            flex: 1;
+            text-align: right;
+            font-size: 18px;
+            color: var(--primary-color);
+            font-weight: bold;
+            border-left: 2px solid #ddd;
+            padding-left: 20px;
+            margin-left: 20px;
+          "
+        >
+          THANH TOÁN
+        </div>
+      </div>
+    </header>
 
-document.addEventListener("DOMContentLoaded", () => {
-  // 1. Check login state
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Vui lòng đăng nhập để thanh toán!");
-    window.location.href = "login.html";
-    return;
-  }
+    <main class="container cart-page">
+      <form id="checkout-form" onsubmit="handleCheckout(event)">
+        <div class="cart-layout">
+          <div class="cart-items-col">
 
-  // 2. Load user name if available
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user && user.name) {
-    document.getElementById("customer-name").value = user.name;
-  }
+            <h3 style="margin-bottom: 20px; border-bottom: 1px solid #eee;">
+              <i class="fas fa-map-marker-alt"></i> Thông tin giao hàng
+            </h3>
 
-  // 3. Tai gia hAng
-  loadCheckoutCart();
-});
-
-async function loadCheckoutCart() {
-  const token = localStorage.getItem("token");
-  try {
-    const res = await fetch(`${API_BASE}/cart`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const result = await res.json();
-
-    // Extract item array
-    const items = Array.isArray(result) ? result : result.data || [];
-
-    if (items.length === 0) {
-      alert("Giỏ hàng đang trống! Vui lòng quay lại mua sắm.");
-      window.location.href = "../index.html";
-      return;
-    }
-
-    renderOrderSummary(items);
-  } catch (err) {
-    console.error("Error loading checkout cart:", err);
-  }
-}
-
-function renderOrderSummary(items) {
-  const container = document.getElementById("order-items-list");
-  let html = "";
-  cartTotal = 0;
-
-  const formatMoney = (amount) =>
-    new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount);
-
-  items.forEach((item) => {
-    const price = item.price || 0;
-    const total = price * item.quantity;
-    cartTotal += total;
-
-    html += `
-            <div class="mini-item">
-                <span style="font-weight:bold; color:#555; margin-right:5px;">${
-                  item.quantity
-                }x</span>
-                <span class="mini-item-name">${item.title}</span>
-                <span style="font-weight:bold;">${formatMoney(total)}</span>
+            <div class="form-group">
+              <label>Người nhận</label>
+              <input type="text" id="customer-name" class="form-control" required />
             </div>
-        `;
-  });
 
-  container.innerHTML = html;
+            <div class="form-group">
+              <label>Số điện thoại (*)</label>
+              <input type="tel" id="phone" class="form-control" required />
+            </div>
 
-  // Update totals
-  document.getElementById("sub-total").innerText = formatMoney(cartTotal);
-  document.getElementById("shipping-fee").innerText = formatMoney(SHIPPING_FEE);
-  document.getElementById("final-total").innerText = formatMoney(
-    cartTotal + SHIPPING_FEE
-  );
-}
+            <div class="form-group">
+              <label>Địa chỉ giao hàng (*)</label>
+              <input type="text" id="address" class="form-control" required />
+            </div>
 
-// Handle checkout submit
-async function handleCheckout(e) {
-  e.preventDefault();
+            <div class="form-group">
+              <label>Ghi chú</label>
+              <textarea id="note" class="form-control"></textarea>
+            </div>
 
-  const name = document.getElementById("customer-name").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
-  const note = document.getElementById("note").value;
+            <!-- ===== PAYMENT ===== -->
+            <h3 style="margin: 30px 0 15px 0;">
+              <i class="fas fa-wallet"></i> Phương thức thanh toán
+            </h3>
 
-  // Get selected payment method
-  const paymentMethod = document.querySelector(
-    'input[name="payment"]:checked'
-  ).value;
+            <div class="payment-methods">
 
-  const fullAddress = `${name} (${phone}) - ${address}`;
+              <!-- COD -->
+              <label class="payment-option">
+                <input type="radio" name="payment" value="cod" checked />
+                <div class="payment-content">
+                  <img src="https://cdn-icons-png.flaticon.com/512/2331/2331941.png"/>
+                  <span>Thanh toán khi nhận hàng (COD)</span>
+                </div>
+              </label>
 
-  const orderData = {
-    shipping_address: fullAddress,
-    customer_note: note,
-    payment_method: paymentMethod,
-    shipping_fee: SHIPPING_FEE,
-    total_amount: cartTotal + SHIPPING_FEE,
-  };
+              <!-- QR -->
+              <label class="payment-option">
+                <input type="radio" name="payment" value="banking" />
+                <div class="payment-content">
+                  <img src="https://cdn-icons-png.flaticon.com/512/2175/2175515.png"/>
+                  <span>Chuyển khoản ngân hàng (QR code)</span>
+                </div>
+              </label>
+            </div>
 
-  const token = localStorage.getItem("token");
-  const btn = document.querySelector(".btn-checkout");
-  btn.innerText = "Đang xử lý...";
-  btn.disabled = true;
+            <!-- 🔥 QR SECTION -->
+            <div id="qr-section" style="display:none; margin-top:20px;">
+              <h4>Quét mã QR để thanh toán</h4>
 
-  try {
-    const res = await fetch(`${API_BASE}/orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(orderData),
-    });
+              <div style="text-align:center;">
+                <img id="qr-image" src="" width="230" />
+              </div>
 
-    const data = await res.json();
+              <p>
+                Ngân hàng: MB Bank <br />
+                STK: <b>123456789</b><br />
+                Nội dung: <b id="qr-content">DH001</b>
+              </p>
 
-    if (res.ok || data.success) {
-      alert("Đặt hàng thành công! Cảm ơn bạn đã mua sắm.");
-      window.location.href = "../index.html";
-    } else {
-      alert("Lỗi: " + data.message);
-      btn.innerText = "ĐẶT HÀNG";
-      btn.disabled = false;
-    }
-  } catch (err) {
-    console.error(err);
-    alert("Lỗi kết nối máy chủ!");
-    btn.innerText = "ĐẶT HÀNG";
-    btn.disabled = false;
-  }
-}
+              <button type="button" onclick="confirmPaid()" class="btn-checkout">
+                Tôi đã thanh toán
+              </button>
+            </div>
+
+          </div>
+
+          <!-- ===== RIGHT SIDE ===== -->
+          <div class="cart-summary-col">
+            <h3>Đơn hàng của bạn</h3>
+
+            <div id="order-items-list">
+              <p>Đang tải...</p>
+            </div>
+
+            <div class="summary-row">
+              <span>Tạm tính:</span>
+              <span id="sub-total">0</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Phí vận chuyển:</span>
+              <span id="shipping-fee">30.000</span>
+            </div>
+
+            <div class="summary-total">
+              <span>Tổng cộng:</span>
+              <span id="final-total">0</span>
+            </div>
+
+            <button type="submit" class="btn-checkout">ĐẶT HÀNG</button>
+
+            <a href="cart.html">
+              ← Quay lại giỏ hàng
+            </a>
+          </div>
+
+        </div>
+      </form>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/checkout.js"></script>
+  </body>
+</html>
