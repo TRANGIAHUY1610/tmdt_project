@@ -8,6 +8,7 @@ class OrdersService {
       customer_note,
       shipping_fee,
       total_amount,
+      order_code, // 🔥 nhận từ QR
     } = payload;
 
     const cartCount = await ordersRepository.countCartItems(userId);
@@ -15,7 +16,11 @@ class OrdersService {
       return { error: { statusCode: 400, message: "Gio hang trong" } };
     }
 
-    const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+    // 🔥 QR thì dùng order_code, không thì tự tạo
+    const orderNumber =
+      order_code || `ORD-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+
+    const status = "pending";
 
     const orderResult = await ordersRepository.createOrder({
       userId,
@@ -25,6 +30,7 @@ class OrdersService {
       customer_note,
       shipping_fee,
       total_amount,
+      status,
     });
 
     const orderId = orderResult.insertId;
@@ -45,6 +51,17 @@ class OrdersService {
   async getMyOrders(userId) {
     const data = await ordersRepository.getOrdersByUser(userId);
     return { data };
+  }
+
+  // 🔥 ADMIN
+  async getAllOrders() {
+    const data = await ordersRepository.getAllOrders();
+    return { data };
+  }
+
+  async confirmOrder(orderNumber) {
+    await ordersRepository.confirmOrder(orderNumber);
+    return { data: true };
   }
 }
 
