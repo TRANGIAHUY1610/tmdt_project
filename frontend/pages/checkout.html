@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
@@ -37,139 +37,108 @@
       <form id="checkout-form" onsubmit="handleCheckout(event)">
         <div class="cart-layout">
           <div class="cart-items-col">
-            <h3
-              style="
-                margin-bottom: 20px;
-                color: #333;
-                border-bottom: 1px solid #eee;
-                padding-bottom: 10px;
-              "
-            >
+
+            <h3 style="margin-bottom: 20px; border-bottom: 1px solid #eee;">
               <i class="fas fa-map-marker-alt"></i> Thông tin giao hàng
             </h3>
 
             <div class="form-group">
               <label>Người nhận</label>
-              <input
-                type="text"
-                id="customer-name"
-                class="form-control"
-                required
-                placeholder="Họ tên người nhận"
-              />
+              <input type="text" id="customer-name" class="form-control" required />
             </div>
 
             <div class="form-group">
               <label>Số điện thoại (*)</label>
-              <input
-                type="tel"
-                id="phone"
-                class="form-control"
-                required
-                placeholder="Ví dụ: 0912345678"
-              />
+              <input type="tel" id="phone" class="form-control" required />
             </div>
 
             <div class="form-group">
               <label>Địa chỉ giao hàng (*)</label>
-              <input
-                type="text"
-                id="address"
-                class="form-control"
-                required
-                placeholder="Số nhà, phường, quận, thành phố..."
-              />
+              <input type="text" id="address" class="form-control" required />
             </div>
 
             <div class="form-group">
-              <label>Ghi chú đơn hàng (không bắt buộc)</label>
-              <textarea
-                id="note"
-                class="form-control"
-                rows="2"
-                placeholder="Ví dụ: Giao trong giờ hành chính, gọi trước khi giao..."
-              ></textarea>
+              <label>Ghi chú</label>
+              <textarea id="note" class="form-control"></textarea>
             </div>
 
-            <h3
-              style="
-                margin: 30px 0 15px 0;
-                color: #333;
-                border-bottom: 1px solid #eee;
-                padding-bottom: 10px;
-              "
-            >
+            <!-- ===== PAYMENT ===== -->
+            <h3 style="margin: 30px 0 15px 0;">
               <i class="fas fa-wallet"></i> Phương thức thanh toán
             </h3>
 
             <div class="payment-methods">
+
+              <!-- COD -->
               <label class="payment-option">
                 <input type="radio" name="payment" value="cod" checked />
                 <div class="payment-content">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/2331/2331941.png"
-                    alt="COD"
-                  />
+                  <img src="https://cdn-icons-png.flaticon.com/512/2331/2331941.png"/>
                   <span>Thanh toán khi nhận hàng (COD)</span>
                 </div>
               </label>
 
+              <!-- QR -->
               <label class="payment-option">
                 <input type="radio" name="payment" value="banking" />
                 <div class="payment-content">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/2175/2175515.png"
-                    alt="Banking"
-                  />
+                  <img src="https://cdn-icons-png.flaticon.com/512/2175/2175515.png"/>
                   <span>Chuyển khoản ngân hàng (QR code)</span>
                 </div>
               </label>
             </div>
+
+            <!-- 🔥 QR SECTION -->
+            <div id="qr-section" style="display:none; margin-top:20px;">
+              <h4>Quét mã QR để thanh toán</h4>
+
+              <div style="text-align:center;">
+                <img id="qr-image" src="" width="230" />
+              </div>
+
+              <p>
+                Ngân hàng: MB Bank <br />
+                STK: <b>123456789</b><br />
+                Nội dung: <b id="qr-content">DH001</b>
+              </p>
+
+              <button type="button" onclick="confirmPaid()" class="btn-checkout">
+                Tôi đã thanh toán
+              </button>
+            </div>
+
           </div>
 
+          <!-- ===== RIGHT SIDE ===== -->
           <div class="cart-summary-col">
-            <h3 style="margin-bottom: 15px">Đơn hàng của bạn</h3>
+            <h3>Đơn hàng của bạn</h3>
 
-            <div
-              id="order-items-list"
-              style="
-                max-height: 250px;
-                overflow-y: auto;
-                margin-bottom: 15px;
-                padding-right: 5px;
-              "
-            >
+            <div id="order-items-list">
               <p>Đang tải...</p>
             </div>
 
             <div class="summary-row">
               <span>Tạm tính:</span>
-              <span id="sub-total">0 ,</span>
+              <span id="sub-total">0</span>
             </div>
+
             <div class="summary-row">
               <span>Phí vận chuyển:</span>
-              <span id="shipping-fee">30.000 ,</span>
+              <span id="shipping-fee">30.000</span>
             </div>
 
             <div class="summary-total">
               <span>Tổng cộng:</span>
-              <span id="final-total" class="total-price-text">0 ,</span>
+              <span id="final-total">0</span>
             </div>
 
             <button type="submit" class="btn-checkout">ĐẶT HÀNG</button>
-            <a
-              href="cart.html"
-              style="
-                display: block;
-                text-align: center;
-                margin-top: 15px;
-                color: #666;
-                font-size: 13px;
-              "
-            >
-              <i class="fas fa-arrow-left"></i> Quay lại giỏ hàng
+
+            <a href="cart.html">
+              ← Quay lại giỏ hàng
             </a>
           </div>
+
         </div>
       </form>
     </main>
@@ -178,10 +147,3 @@
     <script src="../js/checkout.js"></script>
   </body>
 </html>
-
-
-
-
-
-
-
