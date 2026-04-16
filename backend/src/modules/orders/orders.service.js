@@ -30,7 +30,6 @@ class OrdersService {
       customer_note,
       shipping_fee,
       total_amount,
-      status,
     });
 
     const orderId = orderResult.insertId;
@@ -49,19 +48,38 @@ class OrdersService {
   }
 
   async getMyOrders(userId) {
-    const data = await ordersRepository.getOrdersByUser(userId);
-    return { data };
+    const orders = await ordersRepository.getOrdersByUser(userId);
+    for (const order of orders) {
+      order.items = await ordersRepository.getOrderItems(order.id);
+    }
+    return { data: orders };
   }
 
-  // 🔥 ADMIN
-  async getAllOrders() {
-    const data = await ordersRepository.getAllOrders();
-    return { data };
+  async getOrderById(orderId, userId) {
+    const order = await ordersRepository.getOrderById(orderId);
+    if (!order) {
+      return { error: { statusCode: 404, message: "Không tìm thấy đơn hàng" } };
+    }
+    if (order.user_id !== userId) {
+      return { error: { statusCode: 403, message: "Bạn không có quyền xem đơn hàng này" } };
+    }
+    order.items = await ordersRepository.getOrderItems(orderId);
+    return { data: order };
   }
 
-  async confirmOrder(orderNumber) {
-    await ordersRepository.confirmOrder(orderNumber);
-    return { data: true };
+  async cancelOrder(orderId, userId) {
+    const order = await ordersRepository.getOrderById(orderId);
+    if (!order) {
+      return { error: { statusCode: 404, message: "Không tìm thấy đơn hàng" } };
+    }
+    if (order.user_id !== userId) {
+      return { error: { statusCode: 403, message: "Bạn không có quyền hủy đơn hàng này" } };
+    }
+    if (order.status !== "pending") {
+      return { error: { statusCode: 400, message: "Chỉ có thể hủy đơn hàng đang chờ xử lý" } };
+    }
+    await ordersRepository.updateOrderStatus(orderId, "cancelled");
+    return { data: { orderId }, message: "Đã hủy đơn hàng thành công" };
   }
 }
 
